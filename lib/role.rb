@@ -36,31 +36,31 @@ class Role
   def accessible_controllers
     controllers = []
     @rules.each do |rule|
-      if !controllers.include? rule.controller and rule.allows?
+      if rule.allows?
         controllers << rule.controller
       end
     end
-    controllers
+    controllers.uniq
   end
 
   def allowed_actions_in(controller)
     actions = []
     @rules.each do |rule|
-      if rule.controller == controller.to_s and rule.allows? and !actions.include? rule.action
+      if rule.controller == controller.to_s and rule.allows?
         actions << rule.action
       end
     end
-    actions
+    actions.uniq
   end
 
   def denied_actions_in(controller)
     actions = []
     @rules.each do |rule|
-      if rule.controller == controller.to_s and rule.denies? and !actions.include? rule.action
+      if rule.controller == controller.to_s and rule.denies?
         actions << rule.action
       end
     end
-    actions
+    actions.uniq
   end
   
   def is_allowed_to?(action, controller)
