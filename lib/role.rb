@@ -71,29 +71,6 @@ class Role
     false
   end
   
-  def inherits(role)
-    included_role = Role.find(role)
-    included_role.rules ||= []
-    self.rules ||= []
-    new_set = included_role.rules
-    overwritten_set = remove_set = []
-    
-    if included_role
-      self.rules.each do |rule|
-        included_role.rules.each do |included_rule|
-          if included_rule.action == rule.action and included_rule.controller == rule.controller
-            overwritten_set << included_rule
-            remove_set << rule
-            new_set.delete(included_rule)
-          end
-        end
-      end
-      self.rules = self.rules - remove_set  + overwritten_set + new_set
-    end
-    self.rules
-  end
-  
-  
   def merge_rules(new_rules)
     self.rules ||= []
     new_set = new_rules

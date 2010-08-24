@@ -59,7 +59,7 @@ describe Turnstile::Authorization do
         can :manage => :stuff
       end
       
-      Role.find(:master).is_allowed_to?(:create, :stuff).should be_true
+      Role.find(:master).is_allowed_to?(:show, :stuff).should be_true
       Role.find(:master).is_allowed_to?(:destroy, :stuff).should be_true
       Role.find(:reader).is_allowed_to?(:create, :stuff).should be_false
     
