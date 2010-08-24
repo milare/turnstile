@@ -3,6 +3,7 @@ class Rule
   attr_accessor :action, :controller, :allow, :active
   
   def initialize(rules)
+
     @action = rules[:action]
     @controller = rules[:controller]
     @allow = rules[:allow]

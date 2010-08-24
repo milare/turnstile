@@ -15,7 +15,11 @@ class Role
   def self.find(role_sym)
     @@roles[role_sym]
   end
-  
+
+  def self.clear
+    @@roles = {}  
+  end  
+
   def initialize(role)
     @name = role[:name]
     @rules = role[:rules]

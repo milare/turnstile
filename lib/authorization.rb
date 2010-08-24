@@ -13,7 +13,7 @@ module Turnstile
     
     def self.reset
       @@permissions = {}
-      @@roles = {}
+      Role.clear
     end
     
     def self.find_permission(permission_name)

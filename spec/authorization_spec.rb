@@ -58,18 +58,28 @@ describe Turnstile::Authorization do
         inherits :reader
         can :manage => :stuff
       end
-      
+           
       Role.find(:master).is_allowed_to?(:show, :stuff).should be_true
       Role.find(:master).is_allowed_to?(:destroy, :stuff).should be_true
       Role.find(:reader).is_allowed_to?(:create, :stuff).should be_false
   end
   
   it "should load rules and role from config file" do
-    
+
     Turnstile::Authorization.read_config_file
+    
     Role.find(:admin).name.should == :admin
     Turnstile::Authorization.find_permission(:read).should_not be_nil
     
+    Role.find(:admin).is_allowed_to?(:show, :stuff).should be_true
+    Role.find(:admin).is_allowed_to?(:destroy, :stuff).should be_true
+    Role.find(:admin).is_allowed_to?(:create, :stuff).should be_true
+
+    Role.find(:admin).is_allowed_to?(:edit, :stuff).should be_true
+    Role.find(:admin).is_allowed_to?(:update, :stuff).should be_true
+    Role.find(:admin).is_allowed_to?(:edit, :other_stuff).should be_true
+    Role.find(:admin).is_allowed_to?(:create, :other_stuff).should be_false
+
   end
   
 end
