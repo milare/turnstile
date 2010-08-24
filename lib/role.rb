@@ -1,36 +1,35 @@
 class Role
+
+  attr_accessor :name, :rules
   
-  attr_reader :name, :rules
-  
-  @@roles = []
+  @@roles = {}
   
   def self.add_role(role)
-    @@roles << role
+    @@roles[role.name.to_sym] = role
   end
   
   def self.all_roles
     @@roles
   end
   
+  def self.find(role_sym)
+    @@roles[role_sym]
+  end
+  
   def initialize(role)
     @name = role[:name]
     @rules = role[:rules]
-    @parameterized_name = role[:name].gsub(/ /,'_')
     
     # Helper for each initialized role
     # is_role? for a role with name 'role'
     # eg: is_admin? when admin role is instantiated
     Role.class_eval <<-METHOD
-                      def is_#{@parameterized_name}?
+                      def is_#{@name}?
                         @name == '#{@name}'
                       end
                       METHOD
     
     Role.add_role self
-  end
-  
-  def set_rules(rules)
-    @rules = rules
   end
   
   def accessible_controllers
@@ -70,6 +69,47 @@ class Role
       end
     end
     false
+  end
+  
+  def inherits(role)
+    included_role = Role.find(role)
+    included_role.rules ||= []
+    self.rules ||= []
+    new_set = included_role.rules
+    overwritten_set = remove_set = []
+    
+    if included_role
+      self.rules.each do |rule|
+        included_role.rules.each do |included_rule|
+          if included_rule.action == rule.action and included_rule.controller == rule.controller
+            overwritten_set << included_rule
+            remove_set << rule
+            new_set.delete(included_rule)
+          end
+        end
+      end
+      self.rules = self.rules - remove_set  + overwritten_set + new_set
+    end
+    self.rules
+  end
+  
+  
+  def merge_rules(new_rules)
+    self.rules ||= []
+    new_set = new_rules
+    overwritten_set = remove_set = []
+    
+    self.rules.each do |rule|
+      new_rules.each do |included_rule|
+        if included_rule.action == rule.action and included_rule.controller == rule.controller
+          overwritten_set << included_rule
+          remove_set << rule
+          new_set.delete(included_rule)
+        end
+      end
+    end
+    self.rules = self.rules - remove_set + overwritten_set + new_set
+    self.rules
   end
   
 end

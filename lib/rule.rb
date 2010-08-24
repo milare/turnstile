@@ -1,6 +1,6 @@
 class Rule
   
-  attr_reader :action, :controller
+  attr_accessor :action, :controller, :allow, :active
   
   def initialize(rules)
     @action = rules[:action]
@@ -24,5 +24,7 @@ class Rule
   def denies?
     @allow ? false : true
   end
+  
+  
   
 end
