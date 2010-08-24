@@ -62,7 +62,13 @@ describe Turnstile::Authorization do
       Role.find(:master).is_allowed_to?(:show, :stuff).should be_true
       Role.find(:master).is_allowed_to?(:destroy, :stuff).should be_true
       Role.find(:reader).is_allowed_to?(:create, :stuff).should be_false
+  end
+  
+  it "should load rules and role from config file" do
     
+    Turnstile::Authorization.read_config_file
+    Role.find(:admin).name.should == :admin
+    Turnstile::Authorization.find_permission(:read).should_not be_nil
     
   end
   

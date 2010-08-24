@@ -3,6 +3,14 @@ module Turnstile
   
     @@permissions = {}
   
+    def self.read_config_file
+      require File.expand_path(File.dirname(__FILE__) + '/../config/turnstile')
+    end
+    
+    def self.setup(&block)
+      yield if block_given?
+    end
+    
     def self.reset
       @@permissions = {}
       @@roles = {}
@@ -61,6 +69,8 @@ module Turnstile
       end
       @current_role.merge_rules(rules)
     end
+    
+
   
   end
 end
