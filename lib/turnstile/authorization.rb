@@ -82,13 +82,23 @@ module Turnstile
     # TODO: Find a way to get the current_user role in a dynamic way
     # This way like current_user.user_role is too hardcoded
     def current_role
-      current_role = current_user ? Role.find(current_user.user_role.to_sym) : nil
-      current_role ||= Role.default_role
+      # current_user method is used by the most authentication gems
+      role = current_user ? Role.find(current_user.user_role.to_sym) : nil
+      if !role
+        # If the developer created an authentication module with no accessible current_user method
+        # it needs to be defined in Thread.current['current_user']
+        role = Thread.current['current_user'] ? Thread.current['current_user'].user_role : nil
+        if !role
+          ## If none was found set the default role
+          role = Role.default_role
+        end
+      end
+      role
     end
     
     # Set the current_role
     def current_role=(role)
-      current_role = role
+      Thread.curret['current_role'] = role
     end
   
     # Methods to define a permission
