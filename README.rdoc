@@ -3,7 +3,7 @@ With turnstile you'll be able to define rules for each role to access  your cont
 
 = Roles, Rules and Privileges
 
-You can define all roles, all rules and all privileges in the config file, placed in _config/initializers/turnstile.rb_
+You can define all roles, all rules and all privileges in the config file, placed in config/initializers/turnstile.rb
 
 = Privileges
 
@@ -42,10 +42,10 @@ You need to set a role to be used when the current user has no role
 
 An example of config file can be found in config/initializers/turnstile.rb in this repo.
 
-= The user model
+= The User Model
 
 To set the model, so far it is hardcoded, so you need a string column called
-  :user_role
+  user_role
 in your user model, and be sure to have a method that returns the current user, called 
   current_user
  
