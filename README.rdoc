@@ -47,12 +47,35 @@ An example of config file can be found in config/initializers/turnstile.rb in th
 To set the model, so far it is hardcoded, so you need a string column called
   user_role
 
+For example, using Active Record, in your migration, put:
+  t.string :user_role
+
+or for Mongoid:
+  field :user_role
+
 and be sure to have a method that returns the current user using 
+
   current_user
- 
+  
+Authorization makes more sense when used with authentication, the most authentication
+libs have a method called current_user that returns the current user. dah =/
+So you probably won't need to do that, but if you need to, Turnstile also can verify
+user permission trough...
+
+  Thread.current['current_user'] = User...
+  
+So set it and have fun, otherwise, the default role will always be set.
+
+
 = Controllers
 For each controller that you want to monitorate just call:
 
   before_filter :verify_role_permissions!
+  
+= Demonstration
+There is something that i call blongloid !lol! in my repos. Blongoid is a blog prototype
+using Rails 3, Mongoid, Devise and Turnstile.
+
+You can check there some using of Turnstile.
 
 
