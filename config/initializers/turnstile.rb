@@ -33,5 +33,7 @@ Turnstile::Authorization.setup do
     inherits :editor
     can :manage => :stuff
   end
+  
+  default_is :reader
            
 end

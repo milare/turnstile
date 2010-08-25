@@ -37,7 +37,7 @@ module Turnstile
     # If the role is not found tries to define 
     # common names for guests
     # The default role is used when there is no current role
-    def default(role_str)
+    def default_is(role_str)
       role = Role.find(role_str.to_sym)
       if !role
         role ||= Role.find(:guest)
