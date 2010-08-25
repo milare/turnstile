@@ -44,7 +44,7 @@ An example of config file can be found in config/initializers/turnstile.rb in th
 
 = The User Model
 
-To set the model, so far it is hardcoded, so you need a string column called
+So far it is hardcoded, so you need a string column called
   user_role
 
 For example, using Active Record, in your migration, put:
