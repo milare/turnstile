@@ -21,9 +21,6 @@ You can define all roles, all rules and all privileges in the config file, place
 
 = Rules to Roles
 
-
-Below we have an example:
-
   role :reader do
     can :read => :posts
     can :read => :comments
@@ -53,6 +50,6 @@ your user model, and be sure to have a method that returns the current user, cal
 = Controllers
 For each controller that you want to monirate just call:
 
-  before_filer :verify_role_permissions!
+  before_filter :verify_role_permissions!
 
 
