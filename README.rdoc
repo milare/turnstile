@@ -46,11 +46,12 @@ An example of config file can be found in config/initializers/turnstile.rb in th
 
 To set the model, so far it is hardcoded, so you need a string column called
   user_role
-in your user model, and be sure to have a method that returns the current user, called 
+
+and be sure to have a method that returns the current user using 
   current_user
  
 = Controllers
-For each controller that you want to monirate just call:
+For each controller that you want to monitorate just call:
 
   before_filter :verify_role_permissions!
 
