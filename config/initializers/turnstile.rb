@@ -1,3 +1,8 @@
+# Don't forget this include, without it you
+# wont be able to access all the authorization methods
+include Turnstile::Authorization
+
+# Config itself
 Turnstile::Authorization.setup do
   
   privilege :manage do
@@ -14,9 +19,8 @@ Turnstile::Authorization.setup do
     allows_to :update, :edit    
   end
      
-
   role :editor do
-    can :change => :stuff     
+    can :change => :stuff
     can :change => :other_stuff
   end
 

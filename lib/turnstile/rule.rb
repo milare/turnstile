@@ -1,3 +1,5 @@
+# Rule class
+# A simple to class to manipulate the array of rules
 class Rule
   
   attr_accessor :action, :controller, :allow, :active
@@ -10,6 +12,7 @@ class Rule
     @active = rules[:active]
   end
   
+  # The current rule allows or denies some action?
   def allow_or_deny?
     @allow == true ? :allow : :deny
   end
