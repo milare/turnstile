@@ -37,7 +37,7 @@ You can define all roles, all rules and all privileges in the config file, place
 
 You need to set a role to be used when the current user has no role
 
-  default :reader
+  default_is :reader
 
 
 An example of config file can be found in config/initializers/turnstile.rb in this repo.
