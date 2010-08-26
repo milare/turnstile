@@ -71,7 +71,16 @@ So set it and have fun, otherwise, the default role will always be set.
 For each controller that you want to monitorate just call:
 
   before_filter :verify_role_permissions!
+
+= Views
+To access the current role in your views use
+
+  current_role
   
+Then for example, you can check its permissions with
+
+  current_role.is_allowed_to? :create, :posts
+
 = Demonstration
 There is something that i call blongloid !lol! in my repos. Blongoid is a blog prototype
 using Rails 3, Mongoid, Devise and Turnstile.
